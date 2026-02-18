@@ -1,0 +1,385 @@
+# API_EXAMPLES.rest - Exemplos de Requisições HTTP
+
+Arquivo com exemplos de requisições para testar a API do Finance System.
+Use em REST Client (VSCode) ou importe no Postman.
+
+## 🔧 Configuração
+
+```
+@host = http://localhost:3000/api
+@contentType = application/json
+```
+
+---
+
+## 👤 USUÁRIOS
+
+### Criar Novo Usuário
+```http
+POST {{ host }}/users
+Content-Type: {{ contentType }}
+
+{
+  "name": "João Silva",
+  "email": "joao@example.com",
+  "gross_salary": 5000.00
+}
+```
+
+**Resposta (201):**
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "João Silva",
+  "email": "joao@example.com",
+  "gross_salary": 5000.00,
+  "created_at": "2024-02-15T10:30:00.000Z"
+}
+```
+
+---
+
+### Listar Todos os Usuários
+```http
+GET {{ host }}/users
+Content-Type: {{ contentType }}
+```
+
+**Resposta (200):**
+```json
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "name": "João Silva",
+    "email": "joao@example.com",
+    "gross_salary": 5000.00,
+    "created_at": "2024-02-15T10:30:00.000Z"
+  }
+]
+```
+
+---
+
+### Obter Usuário por ID
+```http
+GET {{ host }}/users/550e8400-e29b-41d4-a716-446655440000
+Content-Type: {{ contentType }}
+```
+
+**Resposta (200):**
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "João Silva",
+  "email": "joao@example.com",
+  "gross_salary": 5000.00,
+  "created_at": "2024-02-15T10:30:00.000Z"
+}
+```
+
+---
+
+### Atualizar Usuário
+```http
+PUT {{ host }}/users/550e8400-e29b-41d4-a716-446655440000
+Content-Type: {{ contentType }}
+
+{
+  "name": "João Silva Santos",
+  "gross_salary": 6000.00
+}
+```
+
+**Resposta (200):**
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "João Silva Santos",
+  "email": "joao@example.com",
+  "gross_salary": 6000.00,
+  "created_at": "2024-02-15T10:30:00.000Z"
+}
+```
+
+---
+
+### Deletar Usuário
+```http
+DELETE {{ host }}/users/550e8400-e29b-41d4-a716-446655440000
+Content-Type: {{ contentType }}
+```
+
+**Resposta (204):** Sem conteúdo
+
+---
+
+## 💸 DESPESAS
+
+### Criar Despesa
+```http
+POST {{ host }}/expenses
+Content-Type: {{ contentType }}
+
+{
+  "user_id": "550e8400-e29b-41d4-a716-446655440000",
+  "description": "Almoço no restaurante",
+  "amount": 45.50,
+  "expense_type": "CREDIT_CARD",
+  "category": "Alimentação",
+  "expense_date": "2024-02-15"
+}
+```
+
+**Resposta (201):**
+```json
+{
+  "id": "660e8400-e29b-41d4-a716-446655440001",
+  "user_id": "550e8400-e29b-41d4-a716-446655440000",
+  "description": "Almoço no restaurante",
+  "amount": 45.50,
+  "expense_type": "CREDIT_CARD",
+  "category": "Alimentação",
+  "expense_date": "2024-02-15",
+  "created_at": "2024-02-15T11:00:00.000Z"
+}
+```
+
+---
+
+### Listar Despesas com Filtro
+```http
+GET {{ host }}/expenses?userId=550e8400-e29b-41d4-a716-446655440000&month=2&year=2024
+Content-Type: {{ contentType }}
+```
+
+**Resposta (200):**
+```json
+[
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440001",
+    "user_id": "550e8400-e29b-41d4-a716-446655440000",
+    "description": "Almoço no restaurante",
+    "amount": 45.50,
+    "expense_type": "CREDIT_CARD",
+    "category": "Alimentação",
+    "expense_date": "2024-02-15",
+    "created_at": "2024-02-15T11:00:00.000Z"
+  }
+]
+```
+
+---
+
+### Obter Despesa por ID
+```http
+GET {{ host }}/expenses/660e8400-e29b-41d4-a716-446655440001
+Content-Type: {{ contentType }}
+```
+
+**Resposta (200):**
+```json
+{
+  "id": "660e8400-e29b-41d4-a716-446655440001",
+  "user_id": "550e8400-e29b-41d4-a716-446655440000",
+  "description": "Almoço no restaurante",
+  "amount": 45.50,
+  "expense_type": "CREDIT_CARD",
+  "category": "Alimentação",
+  "expense_date": "2024-02-15",
+  "created_at": "2024-02-15T11:00:00.000Z"
+}
+```
+
+---
+
+### Atualizar Despesa
+```http
+PUT {{ host }}/expenses/660e8400-e29b-41d4-a716-446655440001
+Content-Type: {{ contentType }}
+
+{
+  "description": "Almoço executivo",
+  "amount": 65.00
+}
+```
+
+**Resposta (200):**
+```json
+{
+  "id": "660e8400-e29b-41d4-a716-446655440001",
+  "user_id": "550e8400-e29b-41d4-a716-446655440000",
+  "description": "Almoço executivo",
+  "amount": 65.00,
+  "expense_type": "CREDIT_CARD",
+  "category": "Alimentação",
+  "expense_date": "2024-02-15",
+  "created_at": "2024-02-15T11:00:00.000Z"
+}
+```
+
+---
+
+### Deletar Despesa
+```http
+DELETE {{ host }}/expenses/660e8400-e29b-41d4-a716-446655440001
+Content-Type: {{ contentType }}
+```
+
+**Resposta (204):** Sem conteúdo
+
+---
+
+## 📊 RELATÓRIOS
+
+### Resumo de Despesas
+```http
+GET {{ host }}/reports/summary?userId=550e8400-e29b-41d4-a716-446655440000&month=2&year=2024
+Content-Type: {{ contentType }}
+```
+
+**Resposta (200):**
+```json
+{
+  "user": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "name": "João Silva",
+    "gross_salary": 5000.00
+  },
+  "summary": {
+    "total_expenses": 450.00,
+    "credit_card_total": 200.00,
+    "monthly_total": 150.00,
+    "pix_debit_total": 100.00
+  },
+  "categories": {
+    "Alimentação": {
+      "total": 180.00,
+      "count": 4,
+      "items": [
+        { "description": "Almoço", "amount": 45.50 },
+        { "description": "Cafe da manha", "amount": 25.00 }
+      ]
+    }
+  },
+  "comparison": {
+    "remaining": 4550.00,
+    "percentage_committed": 9.0
+  }
+}
+```
+
+---
+
+### Despesas por Tipo
+```http
+GET {{ host }}/reports/by-type?userId=550e8400-e29b-41d4-a716-446655440000&month=2&year=2024
+Content-Type: {{ contentType }}
+```
+
+**Resposta (200):**
+```json
+{
+  "CREDIT_CARD": {
+    "total": 200.00,
+    "count": 3,
+    "percentage": 44.44
+  },
+  "MONTHLY": {
+    "total": 150.00,
+    "count": 2,
+    "percentage": 33.33
+  },
+  "PIX_DEBIT": {
+    "total": 100.00,
+    "count": 1,
+    "percentage": 22.22
+  }
+}
+```
+
+---
+
+### Histórico Mensal
+```http
+GET {{ host }}/reports/monthly-history?userId=550e8400-e29b-41d4-a716-446655440000&year=2024
+Content-Type: {{ contentType }}
+```
+
+**Resposta (200):**
+```json
+{
+  "year": 2024,
+  "months": [
+    {
+      "month": 1,
+      "month_name": "janeiro",
+      "total": 350.00,
+      "count": 5
+    },
+    {
+      "month": 2,
+      "month_name": "fevereiro",
+      "total": 450.00,
+      "count": 8
+    },
+    {
+      "month": 3,
+      "month_name": "março",
+      "total": 400.00,
+      "count": 6
+    }
+  ],
+  "total_year": 1200.00,
+  "average_month": 400.00
+}
+```
+
+---
+
+## ❌ CÓDIGOS DE ERRO
+
+### 400 Bad Request
+```json
+{
+  "error": "Dados inválidos",
+  "details": "Email já cadastrado"
+}
+```
+
+### 404 Not Found
+```json
+{
+  "error": "Recurso não encontrado",
+  "details": "Usuário com ID 123 não existe"
+}
+```
+
+### 500 Internal Server Error
+```json
+{
+  "error": "Erro interno do servidor",
+  "details": "Erro ao conectar ao banco de dados"
+}
+```
+
+---
+
+## 📝 Notas
+
+- Todos os timestamps estão em ISO 8601
+- UUIDs são strings em formato padrão
+- Valores monetários são DECIMAL com 2 casas
+- Datas estão em formato YYYY-MM-DD
+- Altere `@host` se o backend rodар em porta diferente
+
+## 🧪 Importar no Postman
+
+1. Copie o conteúdo deste arquivo
+2. Abra Postman
+3. Clique em "Import" → "Raw text"
+4. Cole o conteúdo
+5. Clique em "Import"
+
+---
+
+**Finance System - Exemplos de API | 2024**
